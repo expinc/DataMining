@@ -1,4 +1,4 @@
-package horus.datamining;
+package horus.datamining.model.feature;
 
 import java.util.*;
 import weka.core.*;
