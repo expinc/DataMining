@@ -4,15 +4,16 @@ import java.util.*;
 import weka.core.*;
 
 
-class FeatureVectorImpl implements FeatureVector
+public class FeatureVectorImpl implements FeatureVector
 {
-	private class Feature
+	public static class Feature
 	{
 		public String name;
 		public FeatureType type;
 		public Object value;
 		public List<String> validValues;
-		
+
+
 		public double valueToDouble()
 		{
 			double result = 0.0;
@@ -25,7 +26,7 @@ class FeatureVectorImpl implements FeatureVector
 			{
 				for (String validValue : validValues)
 				{
-					if (value == validValue)
+					if (value.equals(validValue))
 						break;
 					else
 						result += 1.0;
@@ -35,9 +36,14 @@ class FeatureVectorImpl implements FeatureVector
 		}
 	}
 
-	
 	private String name;
 	private List<Feature> features;
+
+
+	public FeatureVectorImpl(List<Feature> features)
+	{
+		this.features = features;
+	}
 
 
 	@Override
@@ -116,7 +122,7 @@ class FeatureVectorImpl implements FeatureVector
 		}
 		Instances instances = new Instances(name, attributes, 1);
 		instances.setClassIndex(instances.numAttributes() - 1);
-		
+
 		double[] values = new double[instances.numAttributes()];
 		int i = 0;
 		for (Feature feature : features)
@@ -126,18 +132,18 @@ class FeatureVectorImpl implements FeatureVector
 		}
 		Instance instance = new DenseInstance(1.0, values);
 		instances.add(instance);
-		
+
 		return instances;
 	}
-	
-	
+
+
 	protected Feature getFeature(String name)
 	{
 		// can optimize
 		Feature result = null;
 		for (Feature feature : features)
 		{
-			if (name == feature.name)
+			if (name.equals(feature.name))
 			{
 				result = feature;
 				break;

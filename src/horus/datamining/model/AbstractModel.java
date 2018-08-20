@@ -1,6 +1,9 @@
 package horus.datamining.model;
 
+import java.util.List;
 import horus.datamining.model.feature.FeatureVector;
+import horus.datamining.model.feature.FeatureVectorImpl;
+import horus.datamining.model.feature.FeatureVectorImpl.Feature;
 import weka.core.Instances;
 
 
@@ -21,8 +24,22 @@ abstract class AbstractModel implements Model
 
 
 	@Override
-	abstract public FeatureVector createFeatureVector();
+	public FeatureVector createFeatureVector()
+	{
+		List<Feature> features = getFeatures();
+		FeatureVector featureVector = new FeatureVectorImpl(features);
+		return featureVector;
+	}
 
 
 	abstract protected Object doubleToSuggestionField(String name, double value);
+	
+	
+	abstract protected List<Feature> getFeatures();
+	
+	
+	abstract protected String getName();
+	
+	
+	abstract protected Suggestion createSuggestion();
 }

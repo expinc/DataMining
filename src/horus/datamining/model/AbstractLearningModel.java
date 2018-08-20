@@ -7,11 +7,13 @@ import weka.core.Instances;
 
 abstract class AbstractLearningModel extends AbstractModel
 {
+	String modelPath;
 	Classifier classifier;
 
 
 	public AbstractLearningModel(String modelPath) throws Exception
 	{
+		this.modelPath = modelPath;
 		classifier = (Classifier) weka.core.SerializationHelper.read(modelPath + getModelFile());
 	}
 
@@ -24,7 +26,7 @@ abstract class AbstractLearningModel extends AbstractModel
 		try
 		{
 			double predict = classifier.classifyInstance(instances.get(0));
-			suggestion = new SuggestionImpl();
+			suggestion = createSuggestion();
 			Attribute classAttribute = instances.attribute(instances.numAttributes() - 1);
 			String classAttributeName = classAttribute.name();
 			suggestion.setFieldValue(classAttributeName, doubleToSuggestionField(classAttributeName, predict));
