@@ -1,5 +1,6 @@
 package horus.datamining.model;
 
+import horus.datamining.Environment;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
 import weka.core.Instances;
@@ -7,14 +8,13 @@ import weka.core.Instances;
 
 abstract class AbstractLearningModel extends AbstractModel
 {
-	String modelPath;
 	Classifier classifier;
 
 
-	public AbstractLearningModel(String modelPath) throws Exception
+	public AbstractLearningModel(Environment environment) throws Exception
 	{
-		this.modelPath = modelPath;
-		classifier = (Classifier) weka.core.SerializationHelper.read(modelPath + getModelFile());
+		super(environment);
+		classifier = (Classifier) weka.core.SerializationHelper.read(environment.getModelPath() + getModelFile());
 	}
 
 

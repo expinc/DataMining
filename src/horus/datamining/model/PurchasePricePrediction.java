@@ -1,6 +1,7 @@
 package horus.datamining.model;
 
 import java.util.*;
+import horus.datamining.Environment;
 import horus.datamining.model.feature.FeatureType;
 import horus.datamining.model.feature.FeatureVectorImpl;
 import horus.datamining.model.feature.FeatureVectorImpl.Feature;
@@ -12,9 +13,9 @@ import weka.core.converters.ConverterUtils.DataSource;
 public class PurchasePricePrediction extends AbstractLearningModel
 {
 
-	public PurchasePricePrediction(String modelPath) throws Exception
+	public PurchasePricePrediction(Environment environment) throws Exception
 	{
-		super(modelPath);
+		super(environment);
 	}
 
 
@@ -31,7 +32,7 @@ public class PurchasePricePrediction extends AbstractLearningModel
 		Instances schema = null;
 		try
 		{
-			schema = DataSource.read(modelPath + getName() + ".arff");
+			schema = DataSource.read(environment.getModelPath() + getName() + ".arff");
 		}
 		catch (Exception e)
 		{

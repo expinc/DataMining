@@ -10,7 +10,9 @@ public final class Test
 {
 	public static void main(String[] args) throws Exception
 	{
-		Model model = new PurchasePricePrediction("D:/my-git/data-mining/DataMining/models/");
+		Environment environment = new EnvironmentImpl();
+		environment.setModelPath("D:/my-git/data-mining/DataMining/models/");
+		Model model = new PurchasePricePrediction(environment);
 		FeatureVector featureVector = model.createFeatureVector();
 		featureVector.setValue("Year", 2017);
 		featureVector.setValue("DayOfYear", 91);

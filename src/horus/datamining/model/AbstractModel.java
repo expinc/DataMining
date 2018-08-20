@@ -1,6 +1,7 @@
 package horus.datamining.model;
 
 import java.util.List;
+import horus.datamining.Environment;
 import horus.datamining.model.feature.FeatureVector;
 import horus.datamining.model.feature.FeatureVectorImpl;
 import horus.datamining.model.feature.FeatureVectorImpl.Feature;
@@ -9,6 +10,15 @@ import weka.core.Instances;
 
 abstract class AbstractModel implements Model
 {
+	Environment environment;
+	
+	
+	public AbstractModel(Environment environment)
+	{
+		this.environment = environment;
+	}
+	
+	
 	@Override
 	public Suggestion solve(FeatureVector featureVector) throws Exception
 	{
