@@ -2,6 +2,9 @@
 
 This package provides simple data mining models for **SAP Business One**.
 
+# Environment
+This package uses **JDK 1.8.0** and **Weka 3.8.2**.
+
 # Install
 
  - Download **weka.jar** and **horus.datamining.jar** from **./lib** to your Java project and add them into build paths.
@@ -19,4 +22,4 @@ This package provides simple data mining models for **SAP Business One**.
  - **Suggestion**: The output of a model solution. It may consists of several fields. Usually it consists of one field of the last one of corresponding feature vector.
 
 # Sample Code
-You can refer to ./src/horus/datamining/Test.java as coding example.
+You can refer to ./src/horus/datamining/Sample.java as coding example.
