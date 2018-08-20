@@ -1,5 +1,7 @@
 package horus.datamining;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import horus.datamining.model.*;
 import horus.datamining.model.feature.FeatureVector;
 
@@ -19,8 +21,12 @@ public final class Test
 		// Schema could be found in corresponding .arff files
 		// Typically, the last feature is the result feature
 		FeatureVector featureVector = model.createFeatureVector();
-		featureVector.setValue("Year", 2017);
-		featureVector.setValue("DayOfYear", 91);
+		LocalDate date = LocalDate.of(2017, 4, 1);
+		featureVector.setValue("Year", date.getYear());
+		featureVector.setValue("Month", date.getMonth());
+		featureVector.setValue("Day", date.getDayOfMonth());
+		int dayOfWeek = date.getDayOfWeek().getValue() % DayOfWeek.SUNDAY.getValue();
+		featureVector.setValue("WeekDay", dayOfWeek);
 		
 		// Solve the feature vector by the model
 		// Suggestion contains several fields
