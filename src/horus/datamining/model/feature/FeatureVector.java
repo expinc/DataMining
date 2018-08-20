@@ -16,7 +16,7 @@ public interface FeatureVector
 
 
 	public List<String> getValidValues(String name);
-	
-	
+
+
 	Instances toWekaInstances();
 }

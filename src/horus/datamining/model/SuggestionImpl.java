@@ -35,8 +35,8 @@ class SuggestionImpl implements Suggestion
 	{
 		return new TreeMap<String, Object>(fields);
 	}
-	
-	
+
+
 	void addField(String name)
 	{
 		fields.put(name, null);

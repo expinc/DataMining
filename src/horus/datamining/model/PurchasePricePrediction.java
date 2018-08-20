@@ -6,8 +6,6 @@ import horus.datamining.model.feature.FeatureType;
 import horus.datamining.model.feature.FeatureVectorImpl;
 import horus.datamining.model.feature.FeatureVectorImpl.Feature;
 import weka.core.Attribute;
-import weka.core.Instances;
-import weka.core.converters.ConverterUtils.DataSource;
 
 
 public class PurchasePricePrediction extends AbstractLearningModel
@@ -20,30 +18,19 @@ public class PurchasePricePrediction extends AbstractLearningModel
 
 
 	@Override
-	protected String getModelFile()
+	protected String getName()
 	{
-		return getName() + ".model";
+		return "PurchasePricePrediction";
 	}
 
 
 	@Override
 	protected List<Feature> getFeatures()
 	{
-		Instances schema = null;
-		try
-		{
-			schema = DataSource.read(environment.getModelPath() + getName() + ".arff");
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-
 		List<Feature> features = new LinkedList<Feature>();
-		for (int i = 0; i < schema.numAttributes(); ++i)
+		for (int i = 0; i < featureSchema.numAttributes(); ++i)
 		{
-			Attribute attribute = schema.attribute(i);
+			Attribute attribute = featureSchema.attribute(i);
 			FeatureVectorImpl.Feature feature = new FeatureVectorImpl.Feature();
 
 			feature.name = attribute.name();
@@ -71,28 +58,16 @@ public class PurchasePricePrediction extends AbstractLearningModel
 
 
 	@Override
-	protected String getName()
+	protected String getModelFile()
 	{
-		return "PurchasePricePrediction";
-	}
-	
-	
-	@Override
-	protected Object doubleToSuggestionField(String name, double value)
-	{
-		if (name.equals("Price"))
-			return new Double(value);
-		else
-			return null;
+		return getName() + ".model";
 	}
 
 
 	@Override
-	protected Suggestion createSuggestion()
+	protected String getFeatureSchemaFile()
 	{
-		SuggestionImpl suggestion = new SuggestionImpl();
-		suggestion.addField("Price");
-		return suggestion;
+		return getName() + ".arff";
 	}
 
 }

@@ -11,14 +11,29 @@ import weka.core.Instances;
 abstract class AbstractModel implements Model
 {
 	Environment environment;
-	
-	
+
+
 	public AbstractModel(Environment environment)
 	{
 		this.environment = environment;
 	}
-	
-	
+
+
+	abstract protected String getName();
+
+
+	@Override
+	public FeatureVector createFeatureVector()
+	{
+		List<Feature> features = getFeatures();
+		FeatureVector featureVector = new FeatureVectorImpl(features);
+		return featureVector;
+	}
+
+
+	abstract protected List<Feature> getFeatures();
+
+
 	@Override
 	public Suggestion solve(FeatureVector featureVector) throws Exception
 	{
@@ -33,23 +48,8 @@ abstract class AbstractModel implements Model
 	abstract protected Suggestion solveInstances(Instances instances);
 
 
-	@Override
-	public FeatureVector createFeatureVector()
-	{
-		List<Feature> features = getFeatures();
-		FeatureVector featureVector = new FeatureVectorImpl(features);
-		return featureVector;
-	}
+	abstract protected Suggestion createSuggestion();
 
 
 	abstract protected Object doubleToSuggestionField(String name, double value);
-	
-	
-	abstract protected List<Feature> getFeatures();
-	
-	
-	abstract protected String getName();
-	
-	
-	abstract protected Suggestion createSuggestion();
 }
