@@ -8,6 +8,7 @@ import horus.datamining.model.Model;
 import horus.datamining.model.PurchasePricePrediction;
 import horus.datamining.model.Suggestion;
 import horus.datamining.model.feature.FeatureVector;
+import horus.datamining.wrapper.PurchasePricePredictionWrapper;
 
 
 public final class Test

@@ -56,18 +56,4 @@ public class PurchasePricePrediction extends AbstractLearningModel
 		return features;
 	}
 
-
-	@Override
-	protected String getModelFile()
-	{
-		return getName() + ".model";
-	}
-
-
-	@Override
-	protected String getFeatureSchemaFile()
-	{
-		return getName() + ".arff";
-	}
-
 }

@@ -21,10 +21,16 @@ abstract class AbstractLearningModel extends AbstractModel
 	}
 
 
-	abstract protected String getModelFile();
+	protected String getModelFile()
+	{
+		return getName() + ".model";
+	}
 
 
-	abstract protected String getFeatureSchemaFile();
+	protected String getFeatureSchemaFile()
+	{
+		return getName() + ".arff";
+	}
 
 
 	@Override

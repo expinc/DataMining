@@ -47,4 +47,12 @@ public final class PurchasePricePredictionWrapper
 		}
 		return result;
 	}
+	
+	
+	public static void test() throws Exception
+	{
+		PurchasePricePredictionWrapper.setModelPath("D:/my-git/data-mining/DataMining/models/");
+		double[] result = PurchasePricePredictionWrapper.predictPrice(2017, 4, 1);
+		System.out.println(result[0]);
+	}
 }
