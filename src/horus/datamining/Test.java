@@ -7,6 +7,7 @@ import horus.datamining.env.EnvironmentImpl;
 import horus.datamining.model.Model;
 import horus.datamining.model.PurchasePricePrediction;
 import horus.datamining.model.SaleCommentsPrediction;
+import horus.datamining.model.SaleQuantityPrediction;
 import horus.datamining.model.Suggestion;
 import horus.datamining.model.feature.FeatureVector;
 import horus.datamining.wrapper.PurchasePricePredictionWrapper;
@@ -16,7 +17,7 @@ public final class Test
 {
 	public static void main(String[] args) throws Exception
 	{
-		testSaleCommentPrediction();
+		testSaleQuantityPrediction();
 	}
 	
 	
@@ -62,6 +63,41 @@ public final class Test
 
 			Suggestion suggestion = model.solve(featureVector);
 			System.out.println(suggestion.getFieldValue("Comments"));
+			date = date.plusDays(1);
+		}
+	}
+	
+	
+	private static void testSaleQuantityPrediction() throws Exception
+	{
+		Environment environment = new EnvironmentImpl();
+		environment.setModelPath("D:/my-git/data-mining/DataMining/models/");
+
+		Model commentsModel = new SaleCommentsPrediction(environment);
+		Model quantityModel = new SaleQuantityPrediction(environment);
+
+		LocalDate date = LocalDate.of(2017, 4, 1);
+		LocalDate endDate = LocalDate.of(2017, 12, 31);
+		while (!date.isAfter(endDate))
+		{
+			FeatureVector featureVector = commentsModel.createFeatureVector();
+			featureVector.setValue("Year", date.getYear());
+			featureVector.setValue("DayOfYear", date.getDayOfYear());
+			Suggestion suggestion = commentsModel.solve(featureVector);
+			
+			featureVector = quantityModel.createFeatureVector();
+			featureVector.setValue("Year", date.getYear());
+			featureVector.setValue("Month", date.getMonthValue());
+			featureVector.setValue("Day", date.getDayOfMonth());
+			int dayOfWeek = date.getDayOfWeek().getValue() % DayOfWeek.SUNDAY.getValue();
+			featureVector.setValue("WeekDay", dayOfWeek);
+			featureVector.setValue("Customer", 1);	// just C0001
+			featureVector.setValue("Comments", suggestion.getFieldValue("Comments"));
+			featureVector.setValue("Price", 6.0);	// the major one
+			featureVector.setValue("StockQuantity", 3305);	// average of 2017
+			
+			suggestion = quantityModel.solve(featureVector);
+			System.out.println(suggestion.getFieldValue("SalesQuantity"));
 			date = date.plusDays(1);
 		}
 	}

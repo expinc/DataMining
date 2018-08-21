@@ -20,3 +20,15 @@ while dateVar <= endDate do
 end while;
 
 end;
+
+
+
+select
+	year(R0."DocDate") "Year", month(R0."DocDate") "Month", dayofmonth(R0."DocDate") "Day", weekday(R0."DocDate") "WeekDay",
+	TO_INTEGER(RIGHT(R0."CardCode", 4)) "Customer", TO_DECIMAL(R0."Comments", 21, 6) "Comments", R1."Price",
+	ifnull(DS."StockQuantity", 0) + R1."Quantity" "StockQuantity",
+	R1."Quantity" "SalesQuantity"
+from HACKATHON6.ORDR R0 
+inner join HACKATHON6.RDR1 R1 on R0."DocEntry" = R1."DocEntry" 
+inner join HACKATHON6.DATE2STOCK DS on R0."DocDate" = DS."Date" 
+order by R0."DocEntry";
