@@ -21,5 +21,8 @@ This package uses **JDK 1.8.0** and **Weka 3.8.2**.
  
  - **Suggestion**: The output of a model solution. It may consists of several fields. Usually it consists of one field of the last one of corresponding feature vector.
 
+## Wrapper
+There is one corresponding wrapper class for each model in package **horus.datamining.wrapper**. These wrappers provide use of the models without creating model objects or building feature vectors. Only model path specifications and method calls with corresponding parameters are needed. The results are always double arrays. The input and output schemas are specified in the comments of the source code: **./src/horus/datamining/wrapper/***.
+
 # Sample Code
 You can refer to ./src/horus/datamining/Sample.java as coding example.

@@ -6,12 +6,21 @@ import horus.datamining.env.Environment;
 import horus.datamining.env.EnvironmentImpl;
 import horus.datamining.model.*;
 import horus.datamining.model.feature.FeatureVector;
+import horus.datamining.wrapper.PurchasePricePredictionWrapper;
 
 
 public final class Sample
 {
 	public static void main(String[] args) throws Exception
 	{
+		directCallSample();
+		wrapperSample();
+	}
+	
+	
+	public static void directCallSample() throws Exception
+	{
+		System.out.println("Sample of direct call******************");
 		// Set environment: set path that contains .model and .arff files
 		Environment environment = new EnvironmentImpl();
 		environment.setModelPath("D:/my-git/data-mining/DataMining/models/");
@@ -41,5 +50,23 @@ public final class Sample
 		// Typically the last feature of the feature schema
 		Suggestion suggestion = model.solve(featureVector);
 		System.out.println("Predicted price: " + suggestion.getFieldValue("Price"));
+	}
+	
+	
+	public static void wrapperSample() throws Exception
+	{
+		// Model path need to be specified before prediction
+		System.out.println("Sample of wrapper**********************");
+		PurchasePricePredictionWrapper.setModelPath("D:/my-git/data-mining/DataMining/models/");
+		
+		// Prediction will be based on the .model files in the specified model path
+		// 1st prediction
+		System.out.println("Predicting price of 2017-04-01...");
+		double[] result = PurchasePricePredictionWrapper.predictPrice(2017, 4, 1);
+		System.out.println("Predicted price: " + result[0]);
+		// 2nd prediction
+		System.out.println("Predicting price of 2017-04-02...");
+		result = PurchasePricePredictionWrapper.predictPrice(2017, 4, 2);
+		System.out.println("Predicted price: " + result[0]);
 	}
 }
