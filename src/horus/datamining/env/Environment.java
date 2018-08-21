@@ -1,4 +1,4 @@
-package horus.datamining;
+package horus.datamining.env;
 
 public interface Environment
 {

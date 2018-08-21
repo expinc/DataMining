@@ -1,6 +1,6 @@
 package horus.datamining.model;
 
-import horus.datamining.Environment;
+import horus.datamining.env.Environment;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
 import weka.core.Instances;

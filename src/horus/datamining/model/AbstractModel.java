@@ -1,7 +1,7 @@
 package horus.datamining.model;
 
 import java.util.List;
-import horus.datamining.Environment;
+import horus.datamining.env.Environment;
 import horus.datamining.model.feature.FeatureVector;
 import horus.datamining.model.feature.FeatureVectorImpl;
 import horus.datamining.model.feature.FeatureVectorImpl.Feature;

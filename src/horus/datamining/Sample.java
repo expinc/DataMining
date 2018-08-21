@@ -2,6 +2,8 @@ package horus.datamining;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import horus.datamining.env.Environment;
+import horus.datamining.env.EnvironmentImpl;
 import horus.datamining.model.*;
 import horus.datamining.model.feature.FeatureVector;
 
