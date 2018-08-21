@@ -4,13 +4,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import horus.datamining.env.Environment;
 import horus.datamining.env.EnvironmentImpl;
-import horus.datamining.model.Model;
-import horus.datamining.model.PurchasePricePrediction;
-import horus.datamining.model.SaleCommentsPrediction;
-import horus.datamining.model.SaleQuantityPrediction;
-import horus.datamining.model.Suggestion;
+import horus.datamining.model.*;
 import horus.datamining.model.feature.FeatureVector;
-import horus.datamining.wrapper.PurchasePricePredictionWrapper;
 
 
 public final class Test
