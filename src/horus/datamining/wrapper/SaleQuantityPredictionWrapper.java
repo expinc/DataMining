@@ -25,14 +25,14 @@ public final class SaleQuantityPredictionWrapper
 
 
 	// Input:
-	// year - numeric,
-	// month - numeric,
-	// day - numeric,
-	// customer - numeric (1 for C0001, 2 for C0002...),
-	// price - numeric,
-	// stockQuantity - numeric
+	// 		year - numeric,
+	// 		month - numeric,
+	// 		day - numeric,
+	// 		customer - numeric (1 for C0001, 2 for C0002...),
+	// 		price - numeric,
+	// 		stockQuantity - numeric
 	// Output:
-	// SalesQuantity - numeric
+	//	 	SalesQuantity - numeric
 	public static double[] predictSaleQuantity(int year, int month, int day, int customer, double price,
 			int stockQuantity)
 	{
