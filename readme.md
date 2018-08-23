@@ -26,3 +26,7 @@ There is one corresponding wrapper class for each model in package **horus.datam
 
 # Sample Code
 You can refer to ./src/horus/datamining/Sample.java as coding example.
+
+# Notice
+
+The **StockQuantity** in feature vector of **SaleQuantityPrediction** is the stock quantity of yesterday plus the purchase quantity of today.

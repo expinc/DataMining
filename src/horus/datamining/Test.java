@@ -12,7 +12,7 @@ public final class Test
 {
 	public static void main(String[] args) throws Exception
 	{
-		testPurchasePricePrediction();
+		testSaleQuantityPrediction();
 	}
 
 
@@ -70,6 +70,7 @@ public final class Test
 
 		Model commentsModel = new SaleCommentsPrediction(environment);
 		Model quantityModel = new SaleQuantityPrediction(environment);
+		Model salePriceModel = new SalePricePrediction(environment);
 
 		LocalDate date = LocalDate.of(2017, 4, 1);
 		LocalDate endDate = LocalDate.of(2017, 12, 31);
@@ -79,6 +80,14 @@ public final class Test
 			featureVector.setValue("Year", date.getYear());
 			featureVector.setValue("DayOfYear", date.getDayOfYear());
 			Suggestion suggestion = commentsModel.solve(featureVector);
+			
+			
+			featureVector = salePriceModel.createFeatureVector();
+			featureVector.setValue("Year", date.getYear());
+			featureVector.setValue("Month", date.getMonthValue());
+			featureVector.setValue("Day", date.getDayOfMonth());
+			suggestion = salePriceModel.solve(featureVector);
+			double salePrice = (double) suggestion.getFieldValue("Price");
 
 			featureVector = quantityModel.createFeatureVector();
 			featureVector.setValue("Year", date.getYear());
@@ -87,8 +96,8 @@ public final class Test
 			int dayOfWeek = date.getDayOfWeek().getValue() % DayOfWeek.SUNDAY.getValue();
 			featureVector.setValue("WeekDay", dayOfWeek);
 			featureVector.setValue("Comments", suggestion.getFieldValue("Comments"));
-			featureVector.setValue("Price", 6.0); // the major one
-			featureVector.setValue("StockQuantity", 3305); // average of 2017
+			featureVector.setValue("Price", salePrice);
+			featureVector.setValue("StockQuantity", 3621); // average of 2017
 
 			suggestion = quantityModel.solve(featureVector);
 			System.out.println(suggestion.getFieldValue("SalesQuantity"));
