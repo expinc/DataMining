@@ -11,7 +11,6 @@ import horus.datamining.model.feature.FeatureVector;
 public class ProfitPredictionWrapper
 {
 	private static Environment environment;
-	private static Model purchasePriceModel;
 	private static Model commentsModel;
 	private static Model saleQuantityModel;
 	private static Model profitModel;
@@ -21,7 +20,6 @@ public class ProfitPredictionWrapper
 	{
 		environment = new EnvironmentImpl();
 		environment.setModelPath(modelPath);
-		purchasePriceModel = new PurchasePricePrediction(environment);
 		commentsModel = new SaleCommentsPrediction(environment);
 		saleQuantityModel = new SaleQuantityPrediction(environment);
 		profitModel = new ProfitPrediction(environment);
@@ -33,6 +31,7 @@ public class ProfitPredictionWrapper
 	//		todayMonth - numeric
 	//		todayDay - numeric
 	//		stockQuantity - numeric
+	//		purchasePrice - numeric
 	//		purchaseQuantity - numeric
 	//		salePrice - numeric
 	//		targetYear - numeric
@@ -45,6 +44,7 @@ public class ProfitPredictionWrapper
 			int todayMonth,
 			int todayDay,
 			int stockQuantity,
+			double purchasePrice,
 			int purchaseQuantity,
 			double salePrice,
 			int targetYear,
@@ -58,15 +58,6 @@ public class ProfitPredictionWrapper
 			FeatureVector featureVector = null;
 			Suggestion suggestion = null;
 			int dayOfWeek = 0;
-			
-			featureVector = purchasePriceModel.createFeatureVector();
-			featureVector.setValue("Year", todayDate.getYear());
-			featureVector.setValue("Month", todayDate.getMonthValue());
-			featureVector.setValue("Day", todayDate.getDayOfMonth());
-			dayOfWeek = todayDate.getDayOfWeek().getValue() % DayOfWeek.SUNDAY.getValue();
-			featureVector.setValue("WeekDay", dayOfWeek);
-			suggestion = purchasePriceModel.solve(featureVector);
-			double purchasePrice = (double) suggestion.getFieldValue("Price");
 			
 			featureVector = commentsModel.createFeatureVector();
 			featureVector.setValue("Year", todayDate.getYear());
@@ -123,9 +114,7 @@ public class ProfitPredictionWrapper
 	{
 		ProfitPredictionWrapper.setModelPath("D:/my-git/data-mining/DataMining/models/");
 		double[] result = ProfitPredictionWrapper.predictProfit(
-				2013, 11, 1,
-				22966, 206, 5.99,
-				2013, 11, 18);
+				2017,3,31,-71,2.12875,717,4.99,2017,3,31);
 		System.out.println(result[0]);
 	}
 }
