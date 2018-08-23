@@ -1,4 +1,5 @@
 
+
 # Welcome to Horus' data mining package!
 
 This package provides simple data mining models for **SAP Business One**.
@@ -35,3 +36,7 @@ You can refer to ./src/horus/datamining/Sample.java as coding example.
    today.
  - The **StockQuantity** in feature vector of **ProfitPrediction** is
    the stock quantity of yesterday.
+ - In **ProfitPrediction**, **today** is the day that is going to sell
+   mantous. **Target day** is the day whose profit is to be predicted.
+   The sale/purchase price/quantity belong to **today**, not **target
+   day**.
