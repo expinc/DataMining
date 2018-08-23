@@ -13,7 +13,7 @@ public final class Test
 {
 	public static void main(String[] args) throws Exception
 	{
-		ProfitPredictionWrapper.test();
+		testProfitPrediction();
 	}
 
 
@@ -149,7 +149,7 @@ public final class Test
 		dayOfWeek = todayDate.getDayOfWeek().getValue() % DayOfWeek.SUNDAY.getValue();
 		featureVector.setValue("WeekDay", dayOfWeek);
 		featureVector.setValue("Comments", comments);
-		featureVector.setValue("Price", 5.89); // mean from 20170101 to 20170331
+		featureVector.setValue("Price", salePrice);
 		featureVector.setValue("StockQuantity", 0);
 		suggestion = saleQuantityModel.solve(featureVector);
 		double saleQuantity = (double) suggestion.getFieldValue("SalesQuantity");
