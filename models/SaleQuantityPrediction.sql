@@ -25,7 +25,7 @@ end;
 
 select
 	year(R0."DocDate") "Year", month(R0."DocDate") "Month", dayofmonth(R0."DocDate") "Day", weekday(R0."DocDate") "WeekDay",
-	TO_INTEGER(RIGHT(R0."CardCode", 4)) "Customer", TO_DECIMAL(R0."Comments", 21, 6) "Comments", R1."Price",
+	TO_DECIMAL(R0."Comments", 21, 6) "Comments", R1."Price",
 	ifnull(DS."StockQuantity", 0) + R1."Quantity" "StockQuantity",
 	R1."Quantity" "SalesQuantity"
 from HACKATHON6.ORDR R0 

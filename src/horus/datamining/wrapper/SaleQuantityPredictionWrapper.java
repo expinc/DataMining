@@ -28,12 +28,11 @@ public final class SaleQuantityPredictionWrapper
 	// 		year - numeric,
 	// 		month - numeric,
 	// 		day - numeric,
-	// 		customer - numeric (1 for C0001, 2 for C0002...),
 	// 		price - numeric,
 	// 		stockQuantity - numeric
 	// Output:
 	//	 	SalesQuantity - numeric
-	public static double[] predictSaleQuantity(int year, int month, int day, int customer, double price,
+	public static double[] predictSaleQuantity(int year, int month, int day, double price,
 			int stockQuantity)
 	{
 		double[] result = null;
@@ -52,7 +51,6 @@ public final class SaleQuantityPredictionWrapper
 			featureVector.setValue("Day", date.getDayOfMonth());
 			int dayOfWeek = date.getDayOfWeek().getValue() % DayOfWeek.SUNDAY.getValue();
 			featureVector.setValue("WeekDay", dayOfWeek);
-			featureVector.setValue("Customer", customer);
 			featureVector.setValue("Comments", suggestion.getFieldValue("Comments"));
 			featureVector.setValue("Price", price);
 			featureVector.setValue("StockQuantity", stockQuantity);
@@ -72,7 +70,7 @@ public final class SaleQuantityPredictionWrapper
 	public static void test() throws Exception
 	{
 		SaleQuantityPredictionWrapper.setModelPath("D:/my-git/data-mining/DataMining/models/");
-		double[] result = SaleQuantityPredictionWrapper.predictSaleQuantity(2014, 5, 20, 1, 5.99, 21133);
+		double[] result = SaleQuantityPredictionWrapper.predictSaleQuantity(2014, 5, 20, 5.99, 21133);
 		System.out.println(result[0]);
 	}
 }
