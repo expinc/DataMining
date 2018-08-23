@@ -6,14 +6,13 @@ import horus.datamining.env.Environment;
 import horus.datamining.env.EnvironmentImpl;
 import horus.datamining.model.*;
 import horus.datamining.model.feature.FeatureVector;
-import horus.datamining.wrapper.SaleQuantityPredictionWrapper;
 
 
 public final class Test
 {
 	public static void main(String[] args) throws Exception
 	{
-		SaleQuantityPredictionWrapper.test();
+		testProfitPrediction();
 	}
 
 
@@ -123,6 +122,14 @@ public final class Test
 		featureVector.setValue("DayOfYear", todayDate.getDayOfYear());
 		suggestion = commentsModel.solve(featureVector);
 		double comments = (double) suggestion.getFieldValue("Comments");
+		
+		Model salePriceModel = new SalePricePrediction(environment);
+		featureVector = salePriceModel.createFeatureVector();
+		featureVector.setValue("Year", todayDate.getYear());
+		featureVector.setValue("Month", todayDate.getMonthValue());
+		featureVector.setValue("Day", todayDate.getDayOfMonth());
+		suggestion = salePriceModel.solve(featureVector);
+		double salePrice = (double) suggestion.getFieldValue("Price");
 
 		Model saleQuantityModel = new SaleQuantityPrediction(environment);
 		featureVector = saleQuantityModel.createFeatureVector();
@@ -131,7 +138,6 @@ public final class Test
 		featureVector.setValue("Day", todayDate.getDayOfMonth());
 		dayOfWeek = todayDate.getDayOfWeek().getValue() % DayOfWeek.SUNDAY.getValue();
 		featureVector.setValue("WeekDay", dayOfWeek);
-		featureVector.setValue("Customer", 1); // just C0001
 		featureVector.setValue("Comments", comments);
 		featureVector.setValue("Price", 5.89); // mean from 20170101 to 20170331
 		featureVector.setValue("StockQuantity", 0);
@@ -152,9 +158,9 @@ public final class Test
 			featureVector.setValue("TodayWeekDay", dayOfWeek);
 			featureVector.setValue("StockQuantity", 0);
 			featureVector.setValue("PurchasePrice", purchasePrice);
-			featureVector.setValue("PurchaseQuantity", 235); // mean from 20170101 to 20170331
+			featureVector.setValue("PurchaseQuantity", 235);	// mean from 20170101 to 20170331
 			featureVector.setValue("Comments", comments);
-			featureVector.setValue("SalePrice", 5.89); // mean from 20170101 to 20170331
+			featureVector.setValue("SalePrice", salePrice);
 			featureVector.setValue("SaleQuantity", saleQuantity);
 			featureVector.setValue("TargetYear", targetDate.getYear());
 			featureVector.setValue("TargetMonth", targetDate.getMonthValue());
@@ -167,6 +173,29 @@ public final class Test
 			System.out.println(suggestion.getFieldValue("Profit"));
 			targetDate = targetDate.plusDays(1);
 			++duration;
+		}
+	}
+
+
+	private static void testSalePricePrediction() throws Exception
+	{
+		Environment environment = new EnvironmentImpl();
+		environment.setModelPath("D:/my-git/data-mining/DataMining/models/");
+
+		Model model = new SalePricePrediction(environment);
+
+		LocalDate date = LocalDate.of(2015, 1, 1);
+		LocalDate endDate = LocalDate.of(2017, 12, 31);
+		while (!date.isAfter(endDate))
+		{
+			FeatureVector featureVector = model.createFeatureVector();
+			featureVector.setValue("Year", date.getYear());
+			featureVector.setValue("Month", date.getMonthValue());
+			featureVector.setValue("Day", date.getDayOfMonth());
+
+			Suggestion suggestion = model.solve(featureVector);
+			System.out.println(suggestion.getFieldValue("Price"));
+			date = date.plusDays(1);
 		}
 	}
 }

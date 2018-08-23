@@ -80,7 +80,6 @@ public class ProfitPredictionWrapper
 			featureVector.setValue("Day", todayDate.getDayOfMonth());
 			dayOfWeek = todayDate.getDayOfWeek().getValue() % DayOfWeek.SUNDAY.getValue();
 			featureVector.setValue("WeekDay", dayOfWeek);
-			featureVector.setValue("Customer", 1);	// just C0001
 			featureVector.setValue("Comments", comments);
 			featureVector.setValue("Price", salePrice);
 			featureVector.setValue("StockQuantity", stockQuantity);
