@@ -73,7 +73,9 @@ abstract class AbstractModel implements Model
 			return null;
 
 		Instances instances = featureVector.toWekaInstances();
-		return solveInstances(instances);
+		Suggestion suggestion = solveInstances(instances);
+		amendSuggestion(suggestion, featureVector);
+		return suggestion;
 	}
 
 
@@ -103,4 +105,8 @@ abstract class AbstractModel implements Model
 	{
 		return getName() + ".arff";
 	}
+
+
+	protected void amendSuggestion(Suggestion suggestion, FeatureVector featureVector)
+	{}
 }
