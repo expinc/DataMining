@@ -6,6 +6,7 @@ import horus.datamining.env.Environment;
 import horus.datamining.env.EnvironmentImpl;
 import horus.datamining.model.*;
 import horus.datamining.model.feature.FeatureVector;
+import horus.datamining.wrapper.OperationAdviceWrapper;
 import horus.datamining.wrapper.ProfitPredictionWrapper;
 
 
@@ -13,7 +14,7 @@ public final class Test
 {
 	public static void main(String[] args) throws Exception
 	{
-		testProfitPrediction();
+		OperationAdviceWrapper.test();
 	}
 
 
@@ -21,7 +22,6 @@ public final class Test
 	{
 		Environment environment = new EnvironmentImpl();
 		environment.setModelPath("D:/my-git/data-mining/DataMining/models/");
-
 		Model model = new PurchasePricePrediction(environment);
 
 		LocalDate date = LocalDate.of(2017, 4, 1);
@@ -46,7 +46,6 @@ public final class Test
 	{
 		Environment environment = new EnvironmentImpl();
 		environment.setModelPath("D:/my-git/data-mining/DataMining/models/");
-
 		Model model = new SaleCommentsPrediction(environment);
 
 		LocalDate date = LocalDate.of(2017, 4, 1);
@@ -152,7 +151,7 @@ public final class Test
 		featureVector.setValue("Price", salePrice);
 		featureVector.setValue("StockQuantity", 0);
 		suggestion = saleQuantityModel.solve(featureVector);
-		double saleQuantity = (double) suggestion.getFieldValue("SalesQuantity");
+		int saleQuantity = ((Number) suggestion.getFieldValue("SalesQuantity")).intValue();
 
 		Model profitModel = new ProfitPrediction(environment);
 		LocalDate targetDate = todayDate;
@@ -191,7 +190,6 @@ public final class Test
 	{
 		Environment environment = new EnvironmentImpl();
 		environment.setModelPath("D:/my-git/data-mining/DataMining/models/");
-
 		Model model = new SalePricePrediction(environment);
 
 		LocalDate date = LocalDate.of(2015, 1, 1);
@@ -207,5 +205,26 @@ public final class Test
 			System.out.println(suggestion.getFieldValue("Price"));
 			date = date.plusDays(1);
 		}
+	}
+	
+	
+	private static void testOperationAdvice() throws Exception
+	{
+		Environment environment = new EnvironmentImpl();
+		environment.setModelPath("D:/my-git/data-mining/DataMining/models/");
+		Model model = new OperationAdvice(environment, true);
+		
+		FeatureVector featureVector = model.createFeatureVector();
+		featureVector.setValue("TodayYear", 2017);
+		featureVector.setValue("TodayMonth", 4);
+		featureVector.setValue("TodayDay", 1);
+		featureVector.setValue("StockQuantity", 0);
+		featureVector.setValue("TargetYear", 2017);
+		featureVector.setValue("TargetMonth", 6);
+		featureVector.setValue("TargetDay", 30);
+		Suggestion suggestion = model.solve(featureVector);
+		System.out.println("SalePrice - " + suggestion.getFieldValue("SalePrice"));
+		System.out.println("PurchaseQuantity - " + suggestion.getFieldValue("PurchaseQuantity"));
+		System.out.println("Profit - " + suggestion.getFieldValue("Profit"));
 	}
 }

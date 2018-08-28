@@ -79,7 +79,7 @@ abstract class AbstractModel implements Model
 	}
 
 
-	abstract protected Suggestion solveInstances(Instances instances);
+	abstract protected Suggestion solveInstances(Instances instances) throws Exception;
 
 
 	protected Suggestion createSuggestion()

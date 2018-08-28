@@ -75,7 +75,7 @@ public class ProfitPredictionWrapper
 			featureVector.setValue("Price", salePrice);
 			featureVector.setValue("StockQuantity", stockQuantity);
 			suggestion = saleQuantityModel.solve(featureVector);
-			double saleQuantity = (double) suggestion.getFieldValue("SalesQuantity");
+			int saleQuantity = ((Number) suggestion.getFieldValue("SalesQuantity")).intValue();
 			
 			LocalDate targetDate = LocalDate.of(targetYear, targetMonth, targetDay);
 			featureVector = profitModel.createFeatureVector();
@@ -95,7 +95,7 @@ public class ProfitPredictionWrapper
 			featureVector.setValue("TargetDay", targetDate.getDayOfMonth());
 			dayOfWeek = targetDate.getDayOfWeek().getValue() % DayOfWeek.SUNDAY.getValue();
 			featureVector.setValue("TargetWeekDay", dayOfWeek);
-			long duration = ChronoUnit.DAYS.between(todayDate, targetDate);
+			int duration = (int) ChronoUnit.DAYS.between(todayDate, targetDate);
 			featureVector.setValue("Duration", duration);
 			
 			suggestion = profitModel.solve(featureVector);
@@ -114,7 +114,7 @@ public class ProfitPredictionWrapper
 	{
 		ProfitPredictionWrapper.setModelPath("D:/my-git/data-mining/DataMining/models/");
 		double[] result = ProfitPredictionWrapper.predictProfit(
-				2017,3,31,-71,2.12875,717,4.99,2017,3,31);
+				2017,4,1,0,2.334107431547618,235,4.99,2017,6,30);
 		System.out.println(result[0]);
 	}
 }

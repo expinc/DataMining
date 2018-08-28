@@ -34,9 +34,10 @@ You can refer to ./src/horus/datamining/Sample.java as coding example.
  - The **StockQuantity** in feature vector of **SaleQuantityPrediction**
    is the stock quantity of yesterday plus the purchase quantity of
    today.
- - The **StockQuantity** in feature vector of **ProfitPrediction** is
+ - The **StockQuantity** in feature vector of **ProfitPrediction** and **OperationAdvice** is
    the stock quantity of yesterday.
- - In **ProfitPrediction**, **today** is the day that is going to sell
+ - In **ProfitPrediction** and **OperationAdvice**, **today** is the day that is going to sell
    mantous. **Target day** is the day whose profit is to be predicted.
    The sale/purchase price/quantity belong to **today**, not **target
    day**.
+

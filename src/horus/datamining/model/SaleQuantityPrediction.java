@@ -23,9 +23,9 @@ public class SaleQuantityPrediction extends AbstractLearningModel
 	@Override
 	protected void amendSuggestion(Suggestion suggestion, FeatureVector featureVector)
 	{
-		int stockQuantity = (int) featureVector.getValue("StockQuantity");
-		double saleQuantity = (double) suggestion.getFieldValue("SalesQuantity");
-		if (saleQuantity > stockQuantity)
-			suggestion.setFieldValue("SalesQuantity", (double) stockQuantity);
+		Number stockQuantity = (Number) featureVector.getValue("StockQuantity");
+		Number saleQuantity = (Number) suggestion.getFieldValue("SalesQuantity");
+		if (saleQuantity.intValue() > stockQuantity.intValue())
+			suggestion.setFieldValue("SalesQuantity", stockQuantity.intValue());
 	}
 }
